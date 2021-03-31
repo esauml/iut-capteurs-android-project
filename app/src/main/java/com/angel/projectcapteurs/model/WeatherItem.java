@@ -1,3 +1,5 @@
+package com.angel.projectcapteurs.model;
+
 import com.google.gson.annotations.SerializedName;
 
 public class WeatherItem{
@@ -49,7 +51,7 @@ public class WeatherItem{
 	@Override
  	public String toString(){
 		return 
-			"WeatherItem{" + 
+			"com.angel.projectcapteurs.model.WeatherItem{" +
 			"icon = '" + icon + '\'' + 
 			",description = '" + description + '\'' + 
 			",main = '" + main + '\'' + 

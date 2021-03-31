@@ -1,3 +1,7 @@
+package com.angel.projectcapteurs.model;
+
+import com.google.gson.annotations.SerializedName;
+
 public class Wind{
 
 	@SerializedName("deg")
@@ -25,7 +29,7 @@ public class Wind{
 	@Override
  	public String toString(){
 		return 
-			"Wind{" + 
+			"com.angel.projectcapteurs.model.Wind{" +
 			"deg = '" + deg + '\'' + 
 			",speed = '" + speed + '\'' + 
 			"}";

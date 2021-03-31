@@ -1,3 +1,5 @@
+package com.angel.projectcapteurs.model;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -150,7 +152,7 @@ public class Response{
 	@Override
  	public String toString(){
 		return 
-			"Response{" + 
+			"com.angel.projectcapteurs.model.Response{" +
 			"visibility = '" + visibility + '\'' + 
 			",timezone = '" + timezone + '\'' + 
 			",main = '" + main + '\'' + 

@@ -1,3 +1,5 @@
+package com.angel.projectcapteurs.model;
+
 import com.google.gson.annotations.SerializedName;
 
 public class Clouds{
@@ -16,7 +18,7 @@ public class Clouds{
 	@Override
  	public String toString(){
 		return 
-			"Clouds{" + 
+			"com.angel.projectcapteurs.model.Clouds{" +
 			"all = '" + all + '\'' + 
 			"}";
 		}

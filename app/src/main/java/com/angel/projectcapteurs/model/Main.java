@@ -1,3 +1,5 @@
+package com.angel.projectcapteurs.model;
+
 import com.google.gson.annotations.SerializedName;
 
 public class Main{
@@ -71,7 +73,7 @@ public class Main{
 	@Override
  	public String toString(){
 		return 
-			"Main{" + 
+			"com.angel.projectcapteurs.model.Main{" +
 			"temp = '" + temp + '\'' + 
 			",temp_min = '" + tempMin + '\'' + 
 			",humidity = '" + humidity + '\'' + 

@@ -1,3 +1,5 @@
+package com.angel.projectcapteurs.model;
+
 import com.google.gson.annotations.SerializedName;
 
 public class Coord{
@@ -27,7 +29,7 @@ public class Coord{
 	@Override
  	public String toString(){
 		return 
-			"Coord{" + 
+			"com.angel.projectcapteurs.model.Coord{" +
 			"lon = '" + lon + '\'' + 
 			",lat = '" + lat + '\'' + 
 			"}";

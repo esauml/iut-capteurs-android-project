@@ -1,3 +1,5 @@
+package com.angel.projectcapteurs.model;
+
 import com.google.gson.annotations.SerializedName;
 
 public class Sys{
@@ -60,7 +62,7 @@ public class Sys{
 	@Override
  	public String toString(){
 		return 
-			"Sys{" + 
+			"com.angel.projectcapteurs.model.Sys{" +
 			"country = '" + country + '\'' + 
 			",sunrise = '" + sunrise + '\'' + 
 			",sunset = '" + sunset + '\'' + 
