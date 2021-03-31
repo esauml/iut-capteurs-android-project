@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,6 +22,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,7 +54,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void callAPI(float latitude, float longitude) {
         AsyncTaskRunner runner = new AsyncTaskRunner();
-        runner.execute("");
+        // runner.execute("35", "139");
+        runner.execute(String.valueOf(latitude), String.valueOf(longitude));
     }
 
 
@@ -65,12 +68,13 @@ public class MainActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
             try {
 
-//                    URL url = new URL ("http://api.openweathermap.org/data/2.5/weather?lat=" +
-//                    "{"+ latitude +"}&lon={"+ longitude +"}" +
-//                            "&appid=2e2becf15ab311f47c7cd361617b06e4&units=metric&lang=fr");
+                Log.d("MYDATA", Arrays.toString(params));
+                    URL url = new URL ("https://api.openweathermap.org/data/2.5/weather?" +
+                        "lat=" + params[0] + "&lon=" + params[1]  +
+                        "&appid=2e2becf15ab311f47c7cd361617b06e4&units=metric&lang=fr");
 
                 // fake url
-                URL url = new URL ("https://api.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=2e2becf15ab311f47c7cd361617b06e4&units=metric&lang=fr");
+                // URL url = new URL ("https://api.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=2e2becf15ab311f47c7cd361617b06e4&units=metric&lang=fr");
 
 
                 String jsonS = "";
