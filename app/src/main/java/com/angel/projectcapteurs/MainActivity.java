@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView txtLatitude;
     private TextView txtLongitude;
+    private TextView txtTemp;
     private ImageView imgBackGround;
 
     private Retrofit retrofit;
@@ -124,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
     private void initComponents() {
         txtLatitude = findViewById(R.id.txtLatitude);
         txtLongitude = findViewById(R.id.txtLongitude);
+        txtTemp=findViewById(R.id.txtTemp);
         imgBackGround = findViewById(R.id.imgBackground);
         locationManager= (LocationManager) getSystemService(Context.LOCATION_SERVICE);
     }
