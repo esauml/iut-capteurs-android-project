@@ -1,12 +1,24 @@
 package com.angel.projectcapteurs;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.provider.Settings;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.angel.projectcapteurs.model.Main;
 import com.angel.projectcapteurs.model.Response;
@@ -35,24 +47,88 @@ public class MainActivity extends AppCompatActivity {
     private ImageView imgBackGround;
 
     private Retrofit retrofit;
-
+    private LocationManager locationManager;
+    private Location location;
+    private Handler handler=new Handler();
+    private Runnable runnable;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         initComponents();
-
-        callAPI(1f, 3f);
+        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1);
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            OnGPS();
+        } else {
+            getLocation();
+        }
     }
 
+    @Override
+    protected void onResume() {
+        handler.postDelayed(runnable=new Runnable() {
+            @Override
+            public void run() {
+                handler.postDelayed(runnable,5000);
+                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+                    OnGPS();
+                }else{
+                    getLocation();
+                }
+            }
+        },5000);
+        super.onResume();
+    }
+
+    private void OnGPS() { final AlertDialog.Builder builder=new AlertDialog.Builder(this);
+        builder.setMessage("enable gps").setCancelable(false).setPositiveButton("yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+            }
+        }).setNegativeButton("no", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        final AlertDialog alertDialog=builder.create();
+        alertDialog.show();
+    }
+    private void getLocation(){
+        if(ActivityCompat.
+                checkSelfPermission(
+                        MainActivity.this,
+                        Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED
+                &&
+                ActivityCompat.
+                        checkSelfPermission(
+                                MainActivity.this,Manifest.permission.ACCESS_COARSE_LOCATION)!=PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        }else{
+            Location l=locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            if(l!=null) {
+
+
+                callAPI(l.getLatitude(), l.getLongitude());
+                txtLatitude.setText("Latitude : "+l.getLatitude());
+                txtLongitude.setText("Longitude : "+l.getLongitude());
+            }else{
+                Toast.makeText(this, "Impossible de trouver l’endroit.", Toast.LENGTH_SHORT).show();
+
+            }
+        }
+
+    }
     private void initComponents() {
         txtLatitude = findViewById(R.id.txtLatitude);
         txtLongitude = findViewById(R.id.txtLongitude);
         imgBackGround = findViewById(R.id.imgBackground);
+        locationManager= (LocationManager) getSystemService(Context.LOCATION_SERVICE);
     }
 
-    private void callAPI(float latitude, float longitude) {
+    private void callAPI(double latitude, double longitude) {
         AsyncTaskRunner runner = new AsyncTaskRunner();
         // runner.execute("35", "139");
         runner.execute(String.valueOf(latitude), String.valueOf(longitude));
