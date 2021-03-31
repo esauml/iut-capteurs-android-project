@@ -11,16 +11,16 @@ public class Main{
 	private double tempMin;
 
 	@SerializedName("humidity")
-	private int humidity;
+	private double humidity;
 
 	@SerializedName("pressure")
-	private int pressure;
+	private double pressure;
 
 	@SerializedName("feels_like")
 	private double feelsLike;
 
 	@SerializedName("temp_max")
-	private int tempMax;
+	private double tempMax;
 
 	public void setTemp(double temp){
 		this.temp = temp;
@@ -38,19 +38,19 @@ public class Main{
 		return tempMin;
 	}
 
-	public void setHumidity(int humidity){
+	public void setHumidity(double humidity){
 		this.humidity = humidity;
 	}
 
-	public int getHumidity(){
+	public double getHumidity(){
 		return humidity;
 	}
 
-	public void setPressure(int pressure){
+	public void setPressure(double pressure){
 		this.pressure = pressure;
 	}
 
-	public int getPressure(){
+	public double getPressure(){
 		return pressure;
 	}
 
@@ -62,11 +62,11 @@ public class Main{
 		return feelsLike;
 	}
 
-	public void setTempMax(int tempMax){
+	public void setTempMax(double tempMax){
 		this.tempMax = tempMax;
 	}
 
-	public int getTempMax(){
+	public double getTempMax(){
 		return tempMax;
 	}
 

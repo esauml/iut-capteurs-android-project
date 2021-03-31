@@ -2,11 +2,13 @@ package com.angel.projectcapteurs;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.angel.projectcapteurs.model.Main;
+import com.angel.projectcapteurs.model.Response;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -49,38 +51,75 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void callAPI(float latitude, float longitude) {
+        AsyncTaskRunner runner = new AsyncTaskRunner();
+        runner.execute("");
+    }
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
+
+
+
+    private class AsyncTaskRunner extends AsyncTask<String, String, String> {
+
+        private String resp = null;
+        @Override
+        protected String doInBackground(String... params) {
+            try {
 
 //                    URL url = new URL ("http://api.openweathermap.org/data/2.5/weather?lat=" +
 //                    "{"+ latitude +"}&lon={"+ longitude +"}" +
 //                            "&appid=2e2becf15ab311f47c7cd361617b06e4&units=metric&lang=fr");
 
-                    // fake url
-                    URL url = new URL ("http://api.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=2e2becf15ab311f47c7cd361617b06e4&units=metric&lang=fr");
+                // fake url
+                URL url = new URL ("https://api.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=2e2becf15ab311f47c7cd361617b06e4&units=metric&lang=fr");
 
 
-                    String jsonS = "";
-                    URLConnection conn = url.openConnection();
-                    conn.connect();
-                    BufferedReader in = new BufferedReader(new InputStreamReader(
-                            conn.getInputStream()));
-                    String inputLine;
-                    while ((inputLine = in.readLine()) != null) {
-                        jsonS += inputLine;
+                String jsonS = "";
+                HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                conn.setRequestMethod("GET");
+                conn.setRequestProperty("Content-Type", "application/json; utf-8");
+                conn.setRequestProperty("Accept", "application/json");
+                conn.setDoOutput(true);
+
+                try(BufferedReader br = new BufferedReader(
+                        new InputStreamReader(conn.getInputStream(), "utf-8"))) {
+                    StringBuilder response = new StringBuilder();
+                    String responseLine = null;
+                    while ((responseLine = br.readLine()) != null) {
+                        response.append(responseLine.trim());
                     }
+                    System.out.println(response.toString());
 
                     Gson gson = new Gson();
-                    Main weather = gson.fromJson(jsonS, Main.class);
+                    Response res = gson.fromJson(response.toString(), Response.class);
 
-                    txtLatitude.setText(""+weather.getTemp());
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    resp = ""+res.getMain().getTemp();
                 }
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        }).run();
+
+            return resp;
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            // execution of result of Long time consuming operation
+            // txtLatitude.setText(result);
+        }
+
+
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+
+        @Override
+        protected void onProgressUpdate(String... text) {
+            // txtLatitude.setText(text[0]);
+        }
     }
 }
