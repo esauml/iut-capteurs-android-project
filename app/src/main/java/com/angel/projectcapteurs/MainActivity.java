@@ -190,6 +190,14 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             // execution of result of Long time consuming operation
             // txtLatitude.setText(result);
+            Double temp = Double.valueOf(result);
+            txtTemp.setText(result+"°C");
+            if (temp >= 25)
+                imgBackGround.setImageResource(R.drawable.starwars_tatooine_city_700x298);
+            else if (temp >= 15)
+                imgBackGround.setImageResource(R.drawable.star_wars_yavin_4);
+            else
+                imgBackGround.setImageResource(R.drawable.esb_hoth_at_at);
         }
 
 
