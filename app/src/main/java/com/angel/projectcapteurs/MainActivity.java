@@ -193,11 +193,11 @@ public class MainActivity extends AppCompatActivity {
             Double temp = Double.valueOf(result);
             txtTemp.setText(result+"°C");
             if (temp >= 25)
-                imgBackGround.setImageResource(R.drawable.starwars_tatooine_city_700x298);
+                imgBackGround.setImageResource(R.drawable.desert);
             else if (temp >= 15)
-                imgBackGround.setImageResource(R.drawable.star_wars_yavin_4);
+                imgBackGround.setImageResource(R.drawable.warm);
             else
-                imgBackGround.setImageResource(R.drawable.esb_hoth_at_at);
+                imgBackGround.setImageResource(R.drawable.cold);
         }
 
 
